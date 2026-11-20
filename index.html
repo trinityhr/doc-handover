@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ใบส่งเอกสารออกนอกบริษัท</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef2f4;--surface:#fff;--ink:#15232b;--muted:#5b6b75;--line:#cfd8dd;--accent:#0f5c6e;--accent-ink:#fff;--danger:#b3261e;--ok:#1d6b3a;color-scheme:light;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1a1f;--surface:#18262d;--ink:#e6eef1;--muted:#93a5ae;--line:#2c3f48;--accent:#4fb3c9;--accent-ink:#06222b;--danger:#ff8a80;--ok:#7bd69a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1a1f;--surface:#18262d;--ink:#e6eef1;--muted:#93a5ae;--line:#2c3f48;--accent:#4fb3c9;--accent-ink:#06222b;--danger:#ff8a80;--ok:#7bd69a;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "IBM Plex Sans Thai",system-ui,-apple-system,"Sarabun",sans-serif;-webkit-text-size-adjust:100%}
+.wrap{max-width:640px;margin:0 auto;padding:16px 14px 40px}
+h1{font-size:1.35rem;margin:6px 0 2px;font-weight:600}
+.sub{color:var(--muted);margin:0 0 14px;font-size:.92rem}
+.tabs{display:flex;gap:6px;margin-bottom:14px}
+.tabs button{flex:1;padding:11px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;font:inherit;font-weight:500}
+.tabs button[aria-selected="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:14px}
+.card h2{font-size:1.02rem;margin:0 0 12px;font-weight:600}
+label{display:block;font-size:.88rem;color:var(--muted);margin:12px 0 4px}
+label:first-of-type{margin-top:0}
+input,select,textarea{width:100%;font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 11px}
+textarea{min-height:70px;resize:vertical}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.req::after{content:" *";color:var(--danger)}
+.padbox{position:relative;border:1.5px dashed var(--accent);border-radius:10px;background:#fff;overflow:hidden}
+#pad{display:block;width:100%;height:190px;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;cursor:crosshair}
+.hint{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#8a99a2;pointer-events:none;font-size:.95rem}
+.baseline{position:absolute;left:14px;right:14px;bottom:42px;border-bottom:1px solid #c7d0d5;pointer-events:none}
+.btn{display:block;width:100%;padding:13px;border-radius:10px;border:0;background:var(--accent);color:var(--accent-ink);font:inherit;font-weight:600;font-size:1.02rem}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);font-weight:500}
+.btn.danger{background:transparent;color:var(--danger);border:1px solid var(--danger);font-weight:500}
+.small{padding:8px 12px;font-size:.9rem;width:auto;display:inline-block}
+.err{color:var(--danger);font-size:.9rem;min-height:1.3em;margin:8px 0 0}
+.item{display:block;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:13px 14px;margin-bottom:10px;color:var(--ink);font:inherit}
+.item b{display:block;font-weight:600}
+.item span{display:block;color:var(--muted);font-size:.88rem}
+.item .ok{color:var(--ok);font-weight:500}
+.empty{text-align:center;color:var(--muted);padding:34px 10px}
+#detail{position:fixed;inset:0;background:var(--bg);overflow:auto;z-index:20;padding:calc(14px + env(safe-area-inset-top,0px)) 14px calc(30px + env(safe-area-inset-bottom,0px));display:none}
+#detail.on{display:block}
+.sheet{max-width:640px;margin:0 auto}
+dl{margin:0;display:grid;grid-template-columns:110px 1fr;gap:8px 10px}
+dt{color:var(--muted);font-size:.9rem}dd{margin:0;word-break:break-word}
+.sigimg{background:#fff;border:1px solid var(--line);border-radius:8px;width:100%;max-height:200px;object-fit:contain}
+.stamp{margin-top:10px;padding:10px 12px;border-radius:8px;background:var(--bg);border:1px solid var(--line);font-size:.92rem}
+.actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:11px 16px;border-radius:10px;z-index:30;display:none;max-width:90%;text-align:center}
+@media print{body *{visibility:hidden}#detail,#detail *{visibility:visible}#detail{position:absolute;inset:0;background:#fff;color:#000;--ink:#000;--muted:#444;--line:#999}.actions{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>ใบส่งเอกสารออกนอกบริษัท</h1>
+  <p class="sub">กรอกข้อมูล ให้ผู้รับเซ็นด้วยนิ้ว แล้วกดบันทึก ข้อมูลจะอยู่ในเครื่องนี้แม้ปิดหน้าเว็บ</p>
+  <div class="tabs" role="tablist">
+    <button id="tabNew" role="tab" aria-selected="true">สร้างเอกสาร</button>
+    <button id="tabList" role="tab" aria-selected="false">รายการที่บันทึก (<span id="count">0</span>)</button>
+  </div>
+
+  <section id="viewNew">
+    <div class="card">
+      <h2>ข้อมูลเอกสาร</h2>
+      <label class="req" for="title">ชื่อเอกสาร</label>
+      <input id="title" placeholder="เช่น สัญญาซื้อขาย ฉบับที่ 12/2569" autocomplete="off">
+      <label for="detail2">รายละเอียด / เลขที่อ้างอิง</label>
+      <textarea id="detail2"></textarea>
+      <div class="row">
+        <div><label for="copies">จำนวน (ชุด)</label><input id="copies" type="number" inputmode="numeric" min="1" value="1"></div>
+        <div><label for="level">ระดับความลับ</label><select id="level"><option>ทั่วไป</option><option>ภายใน</option><option>ลับ</option><option>ลับมาก</option></select></div>
+      </div>
+      <label for="purpose">วัตถุประสงค์</label>
+      <select id="purpose"><option>ส่งให้ลูกค้า</option><option>ส่งให้คู่ค้า / ผู้ขาย</option><option>ส่งให้หน่วยงานราชการ</option><option>ส่งให้ที่ปรึกษา / ผู้สอบบัญชี</option><option>อื่น ๆ</option></select>
+    </div>
+
+    <div class="card">
+      <h2>ผู้ส่งและผู้รับ</h2>
+      <div class="row">
+        <div><label class="req" for="sender">ผู้ส่ง (พนักงาน)</label><input id="sender" autocomplete="name"></div>
+        <div><label for="dept">แผนก</label><input id="dept"></div>
+      </div>
+      <div class="row">
+        <div><label class="req" for="org">องค์กรปลายทาง</label><input id="org"></div>
+        <div><label for="sendDate">วันที่ส่ง</label><input id="sendDate" type="date"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>ผู้รับเซ็นรับเอกสาร</h2>
+      <label class="req" for="signer">ชื่อ-นามสกุลผู้รับ</label>
+      <input id="signer" autocomplete="off">
+      <label class="req" style="margin-top:12px">ลายเซ็น (ใช้นิ้ววาดในกรอบ)</label>
+      <div class="padbox">
+        <canvas id="pad"></canvas>
+        <div class="baseline"></div>
+        <div class="hint" id="hint">เซ็นชื่อที่นี่</div>
+      </div>
+      <div style="margin-top:8px"><button class="btn ghost small" id="clear" type="button">ล้างลายเซ็น</button></div>
+      <p class="err" id="err" role="alert"></p>
+      <button class="btn" id="saveBtn" type="button">บันทึกการรับเอกสาร</button>
+    </div>
+  </section>
+
+  <section id="viewList" hidden></section>
+</div>
+
+<div id="detail"><div class="sheet" id="sheet"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+var $=function(s){return document.querySelector(s)};
+var KEY='docHandoverRecords';
+var recs=[];var memOnly=false;
+function load(){try{recs=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){recs=[];}}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(recs));return true}catch(e){memOnly=true;return false}}
+load();
+
+function fmt(iso){try{return new Date(iso).toLocaleString('th-TH',{dateStyle:'long',timeStyle:'short'})+' น.'}catch(e){return iso}}
+function fmtDate(d){if(!d)return '-';try{return new Date(d+'T00:00:00').toLocaleDateString('th-TH',{dateStyle:'long'})}catch(e){return d}}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]})}
+function toast(t){var x=$('#toast');x.textContent=t;x.style.display='block';setTimeout(function(){x.style.display='none'},2600)}
+
+/* signature pad */
+var cv=$('#pad'),ctx=cv.getContext('2d'),drawn=false,drawing=false,lx=0,ly=0,lastW=0;
+function fit(){
+  var r=cv.getBoundingClientRect();if(!r.width)return;
+  var d=window.devicePixelRatio||1,img=drawn?cv.toDataURL():null;
+  cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);lastW=r.width;
+  ctx.setTransform(d,0,0,d,0,0);ctx.lineWidth=2.6;ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#10243a';
+  if(img){var i=new Image();i.onload=function(){ctx.drawImage(i,0,0,r.width,r.height)};i.src=img}
+}
+function pos(e){var r=cv.getBoundingClientRect();return[e.clientX-r.left,e.clientY-r.top]}
+cv.addEventListener('pointerdown',function(e){
+  e.preventDefault();try{cv.setPointerCapture(e.pointerId)}catch(x){}
+  drawing=true;var p=pos(e);lx=p[0];ly=p[1];
+  ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(lx+.01,ly);ctx.stroke();
+  drawn=true;$('#hint').style.display='none';
+});
+cv.addEventListener('pointermove',function(e){
+  if(!drawing)return;e.preventDefault();var p=pos(e);
+  ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(p[0],p[1]);ctx.stroke();lx=p[0];ly=p[1];
+});
+['pointerup','pointercancel','pointerleave'].forEach(function(n){cv.addEventListener(n,function(){drawing=false})});
+cv.addEventListener('touchmove',function(e){e.preventDefault()},{passive:false});
+function clearPad(){drawn=false;fit();ctx.clearRect(0,0,cv.width,cv.height);$('#hint').style.display='flex'}
+$('#clear').onclick=clearPad;
+window.addEventListener('resize',function(){var w=cv.getBoundingClientRect().width;if(w&&Math.abs(w-lastW)>2)fit()});
+
+/* tabs */
+function show(which){
+  var isNew=which==='new';
+  $('#viewNew').hidden=!isNew;$('#viewList').hidden=isNew;
+  $('#tabNew').setAttribute('aria-selected',isNew);$('#tabList').setAttribute('aria-selected',!isNew);
+  if(isNew)setTimeout(fit,0);else renderList();
+}
+$('#tabNew').onclick=function(){show('new')};
+$('#tabList').onclick=function(){show('list')};
+
+/* save */
+function today(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function resetForm(){
+  ['title','detail2','sender','dept','org','signer'].forEach(function(i){$('#'+i).value=''});
+  $('#copies').value=1;$('#level').selectedIndex=0;$('#purpose').selectedIndex=0;$('#sendDate').value=today();clearPad();
+}
+function nextNo(){
+  var d=new Date(),p='SD-'+String(d.getFullYear()+543).slice(2)+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')+'-';
+  var n=recs.filter(function(r){return r.no.indexOf(p)===0}).length+1;
+  return p+String(n).padStart(3,'0');
+}
+$('#saveBtn').onclick=function(){
+  var miss=[];
+  if(!$('#title').value.trim())miss.push('ชื่อเอกสาร');
+  if(!$('#sender').value.trim())miss.push('ผู้ส่ง');
+  if(!$('#org').value.trim())miss.push('องค์กรปลายทาง');
+  if(!$('#signer').value.trim())miss.push('ชื่อผู้รับ');
+  if(!drawn)miss.push('ลายเซ็น');
+  if(miss.length){$('#err').textContent='กรุณากรอกให้ครบ: '+miss.join(', ');return}
+  $('#err').textContent='';
+  var rec={
+    id:Date.now().toString(36),no:nextNo(),
+    title:$('#title').value.trim(),detail:$('#detail2').value.trim(),copies:$('#copies').value||'1',
+    level:$('#level').value,purpose:$('#purpose').value,sender:$('#sender').value.trim(),dept:$('#dept').value.trim(),
+    org:$('#org').value.trim(),sendDate:$('#sendDate').value,
+    signer:$('#signer').value.trim(),signedAt:new Date().toISOString(),sig:cv.toDataURL('image/png')
+  };
+  recs.unshift(rec);
+  var ok=persist();
+  toast(ok?'บันทึกแล้ว: '+rec.no:'บันทึกชั่วคราวเท่านั้น (เครื่องนี้ไม่อนุญาตให้เก็บข้อมูล)');
+  resetForm();show('list');
+};
+
+/* list + detail */
+function renderList(){
+  $('#count').textContent=recs.length;
+  var el=$('#viewList');
+  if(!recs.length){el.innerHTML='<div class="empty">ยังไม่มีเอกสารที่บันทึก</div>';return}
+  el.innerHTML=(memOnly?'<p class="err">ข้อมูลชุดนี้ยังไม่ถูกเก็บถาวรในเครื่อง</p>':'')+recs.map(function(r){
+    return '<button class="item" data-id="'+r.id+'"><b>'+esc(r.title)+'</b><span>'+esc(r.no)+' · ถึง '+esc(r.org)+'</span><span class="ok">'+esc(r.signer)+' เซ็นรับแล้ว</span><span>'+esc(fmt(r.signedAt))+'</span></button>';
+  }).join('');
+  el.querySelectorAll('.item').forEach(function(b){b.onclick=function(){openDetail(b.getAttribute('data-id'))}});
+}
+function openDetail(id){
+  var r=recs.filter(function(x){return x.id===id})[0];if(!r)return;
+  $('#sheet').innerHTML=
+   '<div class="card"><h2>'+esc(r.title)+'</h2><dl>'
+   +'<dt>เลขที่</dt><dd>'+esc(r.no)+'</dd>'
+   +'<dt>รายละเอียด</dt><dd>'+(esc(r.detail)||'-')+'</dd>'
+   +'<dt>จำนวน</dt><dd>'+esc(r.copies)+' ชุด</dd>'
+   +'<dt>ความลับ</dt><dd>'+esc(r.level)+'</dd>'
+   +'<dt>วัตถุประสงค์</dt><dd>'+esc(r.purpose)+'</dd>'
+   +'<dt>ผู้ส่ง</dt><dd>'+esc(r.sender)+(r.dept?' ('+esc(r.dept)+')':'')+'</dd>'
+   +'<dt>องค์กรปลายทาง</dt><dd>'+esc(r.org)+'</dd>'
+   +'<dt>วันที่ส่ง</dt><dd>'+esc(fmtDate(r.sendDate))+'</dd></dl></div>'
+   +'<div class="card"><h2>ลายเซ็นผู้รับ</h2><img class="sigimg" alt="ลายเซ็น" src="'+r.sig+'">'
+   +'<div class="stamp"><b>'+esc(r.signer)+'</b> เซ็นรับเอกสารแล้ว<br>เมื่อ '+esc(fmt(r.signedAt))+'</div></div>'
+   +'<div class="actions"><button class="btn small" id="pr">พิมพ์ / บันทึกเป็น PDF</button><button class="btn ghost small" id="cl">ปิด</button><button class="btn danger small" id="del">ลบรายการ</button></div>';
+  $('#detail').classList.add('on');$('#detail').scrollTop=0;
+  $('#cl').onclick=function(){$('#detail').classList.remove('on')};
+  $('#pr').onclick=function(){window.print()};
+  var armed=false,d=$('#del');
+  d.onclick=function(){
+    if(!armed){armed=true;d.textContent='กดอีกครั้งเพื่อยืนยันลบ';setTimeout(function(){armed=false;d.textContent='ลบรายการ'},3000);return}
+    recs=recs.filter(function(x){return x.id!==id});persist();$('#detail').classList.remove('on');renderList();toast('ลบแล้ว');
+  };
+}
+
+$('#sendDate').value=today();
+$('#count').textContent=recs.length;
+setTimeout(fit,50);
+})();
+</script>
+</body>
+</html>
